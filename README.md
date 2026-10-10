@@ -1,56 +1,38 @@
-# Welcome to your Expo app 👋
+**Errors**
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+1. Type Mismatch in City Selection (weatherData.country vs weatherData.city)
+The Bug: In the cityButton onPress handler and style check, you are comparing and setting selectedCity using weather.country instead of weather.city. Because all three cities are in 'South Africa', selecting one selects all of them or breaks the filtering.
+The Fix: Change weather.country to weather.city
 
-## Get started
 
-1. Install dependencies
+2. Missing ImageBackground Import
+The Bug: You are using <ImageBackground> in your JSX, but it is never imported from 'react-native'.
+The Fix: Add ImageBackground to your React Native imports
 
-   ```bash
-   npm install
-   ```
+3. Duplicate Property Bug in WeatherDetail Component
+The Bug: Inside the WeatherDetail component, both text elements display label instead of using value
+The Fix: Change the second text tag to output value:
 
-2. Start the app
 
-   ```bash
-   npx expo start
-   ```
+4. Incorrect Key in Sun & Moon Data
+The Bug: For the Sunrise detail item, you are passing selectedWeather.sunset
+The Fix: Pass selectedWeather.sunrise instead:
 
-In the output, you'll find options to open the app in a
+TypeScript
+<WeatherDetail label="Sunrise" value={selectedWeather.sunrise} />
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+5. Infinite Scroll / Layout Crash in Hourly Forecast
+The Bug: The hourly forecast ScrollView has horizontal={false} (rendering vertically) inside a parent ScrollView that is also vertical. Furthermore, the hourTemperature text displays selectedWeather.temperature (the city's current overall temperature) rather than the individual hour's temperature (hour.temperature).
+The Fix: Set horizontal={true} and fix the temperature mapping
 
-## Get a fresh project
+6. Missing return Statement in 5-Day Forecast Map
+The Bug: Inside the selectedWeather.daily.map(...) callback, you used curly braces {} without an explicit return statement, meaning nothing renders for the 5-day forecast.
+The Fix: Add a return keyword or replace the curly braces with parentheses ()
 
-When you're ready, run:
+The Bug: In dailyTemperatures, the low temperature is rendered first, and the high temperature second. Also, the dailyCard layout uses flexDirection: 'column', but the child elements use explicit widths (width: 45, width: 90, flex: 1) which overlap or clip text in React Native.
+The Fix: Change the row layout to horizontal so elements align nicely side-by-side
 
-```bash
-npm run reset-project
-```
+**Evidence**
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<img width="1080" height="2400" alt="Screenshot_20261010_112259" src="https://github.com/user-attachments/assets/dd9e8ad7-5c75-4ff3-9a25-d1ee0b86bea7" />
