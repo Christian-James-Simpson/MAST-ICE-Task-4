@@ -35,4 +35,4 @@ The Fix: Change the row layout to horizontal so elements align nicely side-by-si
 
 **Evidence**
 
-<img width="1080" height="2400" alt="Screenshot_20261010_112259" src="https://github.com/user-attachments/assets/dd9e8ad7-5c75-4ff3-9a25-d1ee0b86bea7" />
+<img width="900" height="1900" alt="Screenshot_20261010_112259" src="https://github.com/user-attachments/assets/dd9e8ad7-5c75-4ff3-9a25-d1ee0b86bea7" />
